@@ -10,7 +10,7 @@ In this paper, we propose to generalize the traditional Sign and PReLU functions
 
 ## Citation
 
-If you find our code useful for your research, please consider please consider citing:
+If you find our code useful for your research, please consider citing:
 
     @inproceedings{liu2020reactnet,
       title={ReActNet: Towards Precise Binary Neural Network with Generalized Activation Functions},
