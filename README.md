@@ -44,7 +44,7 @@ If you find our code useful for your research, please consider citing:
 | XNOR-Net | 51.2% | 1.67 x 10^8 | - |
 | Bi-Real Net| 56.4% | 1.63 x 10^8 | - | 
 | Real-to-Binary| 65.4% | 1.83 x 10^8 | - |
-| ReActNet (Bi-Real based) | 65.5% | 1.63 x 10^8 | [Model-ReAct-ResNet](https://hkustconnect-my.sharepoint.com/:u:/g/personal/zliubq_connect_ust_hk/Eci3hQSA2gpHgiqkQDIcBaIByZk6zwMFGoODp9vjr-6eeA?e=oo12qg) |
+| ReActNet (Bi-Real based) | 65.9% | 1.63 x 10^8 | [Model-ReAct-ResNet](https://hkustconnect-my.sharepoint.com/:u:/g/personal/zliubq_connect_ust_hk/EYtZHpouJiVKtfFvl_p9ouUBISwzEuupnqHwJDEPQHWpwA?e=8i22J8) |
 | ReActNet-A | 69.5% | 0.87 x 10^8 | [Model-ReAct-MobileNet](https://hkustconnect-my.sharepoint.com/:u:/g/personal/zliubq_connect_ust_hk/EdaAeiqveCtPt3ElnaY4JJgBsaScj5snGkxIuJhuIPd25A?e=sqg1b6) |
 
 ## Contact
