@@ -45,7 +45,6 @@ class LearnableBias(nn.Module):
         out = x + self.bias.expand_as(x)
         return out
 
-
 class HardBinaryConv(nn.Module):
     def __init__(self, in_chn, out_chn, kernel_size=3, stride=1, padding=1):
         super(HardBinaryConv, self).__init__()
@@ -53,10 +52,12 @@ class HardBinaryConv(nn.Module):
         self.padding = padding
         self.number_of_weights = in_chn * out_chn * kernel_size * kernel_size
         self.shape = (out_chn, in_chn, kernel_size, kernel_size)
-        self.weights = nn.Parameter(torch.rand((self.number_of_weights,1)) * 0.001, requires_grad=True)
+        #self.weight = nn.Parameter(torch.rand((self.number_of_weights,1)) * 0.001, requires_grad=True)
+        self.weight = nn.Parameter(torch.rand((self.shape)) * 0.001, requires_grad=True)
 
     def forward(self, x):
-        real_weights = self.weights.view(self.shape)
+        #real_weights = self.weights.view(self.shape)
+        real_weights = self.weight
         scaling_factor = torch.mean(torch.mean(torch.mean(abs(real_weights),dim=3,keepdim=True),dim=2,keepdim=True),dim=1,keepdim=True)
         #print(scaling_factor, flush=True)
         scaling_factor = scaling_factor.detach()
