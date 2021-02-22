@@ -35,7 +35,12 @@ If you find our code useful for your research, please consider citing:
 (2) Step2:  binarizing weights + activations
 * Change directory to `./resnet/2_step2/` or `./mobilenet/2_step2/`
 * run `bash run.sh`
-       
+    
+## Deployment
+
+* [Convert pytorch checkpoint to onnx](./mobilenet/2_step2/pytorch2onnx.py)
+
+* [Use HuaWei Bolt library to inference](https://github.com/huawei-noah/bolt)
 
 ## Models
 
