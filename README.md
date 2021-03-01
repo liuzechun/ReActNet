@@ -40,6 +40,8 @@ If you find our code useful for your research, please consider citing:
 
 * [Convert pytorch checkpoint to onnx](./mobilenet/2_step2/pytorch2onnx.py)
 
+* [Use onnx-simplifier to simplify model](https://github.com/daquexian/onnx-simplifier)
+
 * [Use HuaWei Bolt library to inference](https://github.com/huawei-noah/bolt)
 
 ## Models
