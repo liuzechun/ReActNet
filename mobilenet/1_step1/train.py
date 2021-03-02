@@ -159,7 +159,7 @@ def main():
 
         epoch += 1
 
-    training_time = (time.time() - start_t) / 36000
+    training_time = (time.time() - start_t) / 3600
     print('total training time = {} hours'.format(training_time))
 
 
