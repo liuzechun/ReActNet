@@ -45,14 +45,16 @@ class BinaryActivation(nn.Module):
 
     def forward(self, x):
         out_forward = torch.sign(x)
-        mask1 = x < -1
-        mask2 = x < 0
-        mask3 = x < 1
-        out1 = (-1) * mask1.type(torch.float32) + (x*x + 2*x) * (1-mask1.type(torch.float32))
-        out2 = out1 * mask2.type(torch.float32) + (-x*x + 2*x) * (1-mask2.type(torch.float32))
-        out3 = out2 * mask3.type(torch.float32) + 1 * (1- mask3.type(torch.float32))
-        out = out_forward.detach() - out3.detach() + out3
-
+        if (self.training):
+            mask1 = x < -1
+            mask2 = x < 0
+            mask3 = x < 1
+            out1 = (-1) * mask1.type(torch.float32) + (x*x + 2*x) * (1-mask1.type(torch.float32))
+            out2 = out1 * mask2.type(torch.float32) + (-x*x + 2*x) * (1-mask2.type(torch.float32))
+            out3 = out2 * mask3.type(torch.float32) + 1 * (1- mask3.type(torch.float32))
+            out = out_forward.detach() - out3.detach() + out3
+        else:
+            out = out_forward
         return out
 
 class LearnableBias(nn.Module):
@@ -61,7 +63,7 @@ class LearnableBias(nn.Module):
         self.bias = nn.Parameter(torch.zeros(1,out_chn,1,1), requires_grad=True)
 
     def forward(self, x):
-        out = x + self.bias.expand_as(x)
+        out = x + self.bias.reshape([-1, 1, 1])
         return out
 
 class HardBinaryConv(nn.Module):
@@ -77,13 +79,17 @@ class HardBinaryConv(nn.Module):
         real_weights = self.weights.view(self.shape)
         scaling_factor = torch.mean(torch.mean(torch.mean(abs(real_weights),dim=3,keepdim=True),dim=2,keepdim=True),dim=1,keepdim=True)
         #print(scaling_factor, flush=True)
-        scaling_factor = scaling_factor.detach()
-        binary_weights_no_grad = scaling_factor * torch.sign(real_weights)
-        cliped_weights = torch.clamp(real_weights, -1.0, 1.0)
-        binary_weights = binary_weights_no_grad.detach() - cliped_weights.detach() + cliped_weights
+        if (self.training):
+            scaling_factor = scaling_factor.detach()
+            binary_weights_no_grad = scaling_factor * torch.sign(real_weights)
+            cliped_weights = torch.clamp(real_weights, -1.0, 1.0)
+            binary_weights = binary_weights_no_grad.detach() - cliped_weights.detach() + cliped_weights
+        else:
+            binary_weights = torch.sign(real_weights)
         #print(binary_weights, flush=True)
         y = F.conv2d(x, binary_weights, stride=self.stride, padding=self.padding)
-
+        if (not self.training):
+            y = y * scaling_factor.reshape([-1, 1, 1])
         return y
 
 class BasicBlock(nn.Module):
@@ -188,9 +194,3 @@ class reactnet(nn.Module):
         x = self.fc(x)
 
         return x
-
-
-
-
-
-
